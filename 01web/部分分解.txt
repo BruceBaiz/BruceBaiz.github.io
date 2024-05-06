@@ -1,0 +1,43 @@
+1、左侧固定不滚动、右侧滚动
+https://blog.csdn.net/qq_40147863/article/details/89045691
+
+2、头像添加边距、间距
+
+img
+{
+	width:180px;
+	height:180px;
+	padding:10px;
+	border: 2px solid yellow;
+}
+
+3、简历头部样式
+<div style="background-color:red;border:0; width:200px;height:50px; text-align:center; display:table-cell; vertical-align:middle; font-size:15px;">学习经历</div>
+margin也可以	
+<input type="text" name="lastname" value="学习经历" style="background-color:red;border:0; width:200px;height:50px; text-align:center; font-size:15px;">
+
+4、hr样式
+<hr style="height:1px; border:none; border-top:2px dotted blue;"/>
+
+5、table  布局
+<table border="0">
+  <tr>
+    <td>100</td>
+    <td>200</td>
+    <td>300</td>
+  </tr>
+</table>
+ 
+<h4>两行三列:</h4>
+<table border="0">
+  <tr>
+    <td>100</td>
+    <td>200</td>
+    <td>300</td>
+  </tr>
+  <tr>
+    <td>400</td>
+    <td>500</td>
+    <td>600</td>
+  </tr>
+</table>
