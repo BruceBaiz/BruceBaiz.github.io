@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Tutorials</title>
+<title>Install</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script>
@@ -33,7 +33,7 @@
 <header class="py-3">
 	<div class="container">
 			<div id="logo">
-				<h1> <a href="index.html"><span class="fa fa-stethoscope" aria-hidden="true"></span> PostGeoMedia</a></h1>
+				<h1> <a href="index.html"><span class="fa fa-stethoscope" aria-hidden="true"></span> </a></h1>
 			</div>
 		<!-- nav -->
 		<nav class="d-lg-flex">
@@ -43,7 +43,7 @@
 				<li class="active"><a href="index.html">Home</a></li>	
 				<li class=""><a href="baiz.html">Profile</a></li>			
 				<li class=""><a href="install.html">Installation</a></li>
-				<li class=""><a href="mailto:dingwei@kunsan.ac.kr">Contact Us</a></li>
+				<li class=""><a href="mailto:1971226446@qq.com">Contact Us</a></li>
 			</ul>
 		</nav>
 		<!-- //nav -->
@@ -58,9 +58,8 @@
 <!-- //banner -->
 
 
-<!-- Latest News -->
 		<div class="container py-lg-5">
-		<h4 class="heading text-center mb-sm-1 mb-5">PostGeoMedia Installation</h4>		
+		<h4 class="heading text-center mb-sm-1 mb-5">PL/Java Installation</h4>		
 
 		<h4 class=" text-left mb-sm-2">1.	Prepare Work</h4>
 		<hr>
@@ -129,63 +128,13 @@
 </pre><br>
 </h6>
 <br>
-<h4 class=" text-left mb-sm-2">3.	Install Function in PostgreSQL	</h4>
-<hr>
-In your postgresql or pgAdmin4 query tool, download and execute follow sql files;<br>
-<h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 
-3.1	Create table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/1_table.sql <br>----------------------------------------------------------
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 1_table.sql<br>
-3.2	Create type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/2_type.sql <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 2_type.sql<br>
-3.3	Create trigger<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github: https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/3_trigger.sql <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 3_trigger.sql<br>
-3.4	Function based<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/4_addMGeometryColumns.sql <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 4_addMGeometryColumns.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/5_appendMGeoemtryData.sql <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 5_appendMGeoemtryData.sql<br>
-3.5	Function mgeometry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/6_functionMGeometry.sql   <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 6_functionMGeometry.sql<br>
-3.6	Test<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/1_createTable.sql <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 1_createTable.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download files from github:	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/2_insertTableData <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute<br> 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_carsensors.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_cartrajs.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_userstphotos.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_uservideos.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download files from github:	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/3_insertMGeometryData <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accx.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accy.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accz.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mpoint.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mvideo.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_stphoto.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github: https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/4-8 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4_testQuery_Join.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5_testQuery_Temporal_mpoint.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6_testQuery_Temporal_mvideo.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7_testQuery_SpatioTemporal_mpoint.sql<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8_testQuery_SpatioTemporal_mvideo.sql<br>
-3.7	Insert All BDD-100k NewYork City Data<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	http://gofile.me/4lVxW/UuCjL3xit <br>
-
-</h6>
 		</div>
-<!-- //Latest News -->
 
 <!-- copyright -->
 <div class="copyright">
 	<div class="container py-4">
 		<div class=" text-center">
-			<p>© 2019 PostGeoMedia. All Rights Reserved | Design by <a href="http://mcalab.kunsan.ac.kr/"> InfoLab</a> </p>
+			<p>© 2024 Bai Zhuoran All Rights Reserved | Design by <a href="https://BruceBaiz.github.io">myself</a> </p>
 		</div>
 	</div>
 </div>
