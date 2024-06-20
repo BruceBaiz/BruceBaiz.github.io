@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tutorials</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script>
+    </script>
+	<link href="css/css_slider.css" type="text/css" rel="stylesheet" media="all"><!-- slider css -->
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' /><!-- custom css -->
+    <link href="css/font-awesome.min.css" rel="stylesheet"><!-- fontawesome css -->	
+</head>
+<body>
+
+<!-- top header -->
+<div class="header-top">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<ul class="d-lg-flex header-w3_pvt">
+					<li class="mr-lg-3">
+						<!--<span class="fa fa-envelope-open"></span>
+						<a href="mailto:dingwei@kunsan.ac.kr" class="">dingwei@kunsan.ac.kr</a>-->
+					</li>
+				</ul>
+			</div>		
+		</div>
+	</div>
+</div>
+
+<header class="py-3">
+	<div class="container">
+			<div id="logo">
+				<h1> <a href="index.html"><span class="fa fa-stethoscope" aria-hidden="true"></span> PostGeoMedia</a></h1>
+			</div>
+		<!-- nav -->
+		<nav class="d-lg-flex">
+			<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+			<input type="checkbox" id="drop" />
+			<ul class="menu mt-2 ml-auto">
+				<li class="active"><a href="index.html">Home</a></li>	
+				<li class=""><a href="baiz.html">Profile</a></li>			
+				<li class=""><a href="install.html">Installation</a></li>
+				<li class=""><a href="mailto:dingwei@kunsan.ac.kr">Contact Us</a></li>
+			</ul>
+		</nav>
+		<!-- //nav -->
+	</div>
+</header>
+<!-- banner -->
+<div style="background-color:#000; height:70px;">
+		<div class="container" style="color:#fff;margin-top:70px;"><br>
+			<span>You Are Here » <a href="index.html">Home</a> » Installation</span>
+		</div>
+</div>
+<!-- //banner -->
+
+
+<!-- Latest News -->
+		<div class="container py-lg-5">
+		<h4 class="heading text-center mb-sm-1 mb-5">PostGeoMedia Installation</h4>		
+
+		<h4 class=" text-left mb-sm-2">1.	Prepare Work</h4>
+		<hr>
+		<h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 1.1	PostgreSQL 11<br>
+1.2	Java and JDK 1.8<br>
+1.3	Maven 3.3<br>
+1.4	Checking<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	1. g++ --version   	success<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. javac -version 	success<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. pg_config	success<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. mvn -version	success<br>
+</pre><br>
+</h6>
+<h4 class=" text-left mb-sm-2">2.	Installation of PL/Java</h4>
+<hr>
+<h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 
+2.1	Installation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	$ yum install java-1.8.0-openjdk-devel.x86_64<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	$ yum install <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	$ yum install pljava-11.x86_64<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	1. Setting in PostgreSQL for PL/Java <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$cd /var/lib/pgsql/11/data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$vi postgresql.conf<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. Add the following lines for the pljava setting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.1.jar'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. Restart of PostgreSQL <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$systemctl restart postgresql-11.service<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. In psql or pgAdmin4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		CREATE EXTENSION pljava;<br>
+2.2	Build PL/java Source by Maven<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	1. $yum install postgresql-devel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. $visit https://github.com/tada/pljava/releases/tag/V1_5_2 and download the source (.zip), unzip files in root: /tmp/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. Change the pljava folder name (pljava_1.5.2 to pljava) and move to pljava folder(cd /tmp/pljava)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$mvn clean install<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PostgreSQL PL/Java ................................ SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java API ....................................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java backend Java code ......................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java backend native code ....................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java Deploy .................................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java Ant tasks ................................. SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java examples .................................. SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java packaging ................................. SUCCESS<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), download all files from (https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/04.proj) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	5. Copy the folder 04_proj/ files into a path, such as: /tmp/proj, move to the path and run: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$mvn clean package    <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Building jar: /tmp/proj/target/proj-0.0.1-SNAPSHOT.jar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] BUILD SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Total time: 3.600 s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Finished at: 2019-06-05T12:54:16-04:00<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Final Memory: 17M/201M<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	6. Add JTS library (jts-core-1.15.0-SNAPSHOT.jar)for SQL query and move the jar to a folder (eg. /tmp/), the jar file can be download from this website (jts-release-1.15.0-bin.zip):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		https://github.com/locationtech/jts/releases/tag/jts-1.15.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	7. In psql or pgAdmin4, install java library<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.set_classpath('public', 'jar1:jar2');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.get_classpath('public'); <br>
+<!-- select sqlj.remove_jar('jar', true); select sqlj.remove_jar('jar2', true);-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	8. Finished.<br>
+</pre><br>
+</h6>
+<br>
+<h4 class=" text-left mb-sm-2">3.	Install Function in PostgreSQL	</h4>
+<hr>
+In your postgresql or pgAdmin4 query tool, download and execute follow sql files;<br>
+<h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 
+3.1	Create table<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/1_table.sql <br>----------------------------------------------------------
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 1_table.sql<br>
+3.2	Create type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/2_type.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 2_type.sql<br>
+3.3	Create trigger<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github: https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/3_trigger.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 3_trigger.sql<br>
+3.4	Function based<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/4_addMGeometryColumns.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 4_addMGeometryColumns.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/5_appendMGeoemtryData.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 5_appendMGeoemtryData.sql<br>
+3.5	Function mgeometry<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/6_functionMGeometry.sql   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 6_functionMGeometry.sql<br>
+3.6	Test<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/1_createTable.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 1_createTable.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download files from github:	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/2_insertTableData <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_carsensors.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_cartrajs.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_userstphotos.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_uservideos.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download files from github:	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/3_insertMGeometryData <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accx.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accy.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accz.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mpoint.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mvideo.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_stphoto.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github: https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/4-8 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4_testQuery_Join.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5_testQuery_Temporal_mpoint.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6_testQuery_Temporal_mvideo.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7_testQuery_SpatioTemporal_mpoint.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8_testQuery_SpatioTemporal_mvideo.sql<br>
+3.7	Insert All BDD-100k NewYork City Data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	http://gofile.me/4lVxW/UuCjL3xit <br>
+
+</h6>
+		</div>
+<!-- //Latest News -->
+
+<!-- copyright -->
+<div class="copyright">
+	<div class="container py-4">
+		<div class=" text-center">
+			<p>© 2019 PostGeoMedia. All Rights Reserved | Design by <a href="http://mcalab.kunsan.ac.kr/"> InfoLab</a> </p>
+		</div>
+	</div>
+</div>
+<!-- //copyright -->
+		
+<!-- move top -->
+<div class="move-top text-right">
+	<a href="#home" class="move-top"> 
+		<span class="fa fa-angle-up  mb-3" aria-hidden="true"></span>
+	</a>
+</div>
+<!-- move top -->
+
+</body>
+</html>
+

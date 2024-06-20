@@ -1,0 +1,1251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tutorials</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script>
+    </script>
+	<link href="css/css_slider.css" type="text/css" rel="stylesheet" media="all"><!-- slider css -->
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' /><!-- bootstrap css -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' /><!-- custom css -->
+    <link href="css/font-awesome.min.css" rel="stylesheet"><!-- fontawesome css -->	
+</head>
+<body>
+
+<!-- top header -->
+<div class="header-top">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<ul class="d-lg-flex header-w3_pvt">
+					<li class="mr-lg-3">
+						<!--<span class="fa fa-envelope-open"></span>
+						<a href="mailto:dingwei@kunsan.ac.kr" class="">dingwei@kunsan.ac.kr</a>-->
+					</li>
+				</ul>
+			</div>		
+		</div>
+	</div>
+</div>
+
+<header class="py-3">
+	<div class="container">
+			<div id="logo">
+				<h1> <a href="index.html"><span class="fa fa-stethoscope" aria-hidden="true"></span> PostGeoMedia</a></h1>
+			</div>
+		<!-- nav -->
+		<nav class="d-lg-flex">
+			<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+			<input type="checkbox" id="drop" />
+			<ul class="menu mt-2 ml-auto">
+				<li class="active"><a href="index.html">Home</a></li>
+				<li class=""><a href="install.html">Installation</a></li>
+				<li class=""><a href="tutorials.html">Tutorials</a></li>
+				<li class=""><a href="mailto:dingwei@kunsan.ac.kr">Contact Us</a></li>
+			</ul>
+		</nav>
+		<!-- //nav -->
+	</div>
+</header>
+<!-- banner -->
+<div style="background-color:#000; height:70px;">
+		<div class="container" style="color:#fff;margin-top:70px;"><br>
+			<span>You Are Here » <a href="index.html">Home</a> » Tutorials</span>
+		</div>
+</div>
+<!-- //banner -->
+
+
+<!-- Latest News -->
+<section>
+		<div class="container py-lg-5">	
+		<h4 class=" text-left mb-sm-2">Extensible data types</h4>
+		<hr>
+		<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3">PostGeoMedia supports many spatiotemporal data types, such as MPoint, MPolygon, MVideo, MPhoto, FOV, MDouble etc. Each data types store the spatiotemporal information, which is two-dimensional in the Euclidean space. Taking the formal definition intuitively, our PostGeoMedia type uses the following features.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	Each object is a sequence of timestamp-value pairs. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	PostGeoMedia object must follow the Open Geospatial Consortium (OGC) moving feature standards.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	PostGeoMedia object can be of the different types (i.e., points, polygons, photo, video, double and so on). 
+</h6>
+<br>
+
+<h4 class=" text-left mb-sm-2">Examples types</h4>
+<hr>
+<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;"  class="mt-3">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MPOINT: ((40.67 -73.83) 1000, (40.74, -73.99) 2000).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	STPHOTO (http://data.u-gis.net/img/003.jpg 100 200 (10 0 60 30 0.001) null (40.65 -73.56) 3000).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MDOUBLE: (1.0 1000, 2.0 1100, 1.5 1200).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MVIDEO (uri, MPOINT ((0.0 0.0) 1000, (2.0 5.0) 2000, (34.0 333.0) 3000), FRAME ((1 1 1 1 1), (1 1 1 1 2), (1 1 1 1 3))).
+<br><br>
+
+</h6>
+<h4 class=" text-left mb-sm-2">Extensible operations</h4>
+<hr>
+<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3">
+Spatiotemporal operations in PostGeoMedia have been implemented as PL/Java SQL. In this tutorial, we will take you with a step by step instructions to use these spatiotemporal operations.
+<br><br>
+
+</h6>
+<h4 class=" text-left mb-sm-2">Table creation and data update	</h4>
+<hr>
+<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3">
+The category of operations is used in creating and updating statements to change the recorded moving media data. We consider the following relational schema for example table userVideos, userTrajs and city that stores basic information.
+<br>
+</h6>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>	
+CREATE TABLE userTrajs 
+(
+	id	integer,
+   	carnumber  text
+);
+select addmgeometrycolumn('public','usertrajs','mt',4326,'mpoint',2, 50);
+
+CREATE TABLE userStphotos 
+(
+	id	integer,
+   	carnumber  text
+);
+select addmgeometrycolumn('public','userstphotos','st',4326,'stphoto',2, 1);
+
+CREATE TABLE userSensors
+(
+	id	integer,
+	carnumber	text
+);
+select addmgeometrycolumn('public','usersensors','accx',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','accy',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','accz',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','gyrox',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','gyroy',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','gyroz',4326,'mdouble',2, 3000);
+
+CREATE TABLE userVideos 
+(
+	id	integer,
+   	name  text
+);
+select addmgeometrycolumn('public','uservideos','mv',4326,'mvideo',2, 3000);
+
+CREATE TABLE city
+(
+	id	integer,
+	name	text,
+	geo	polygon
+);
+
+</pre>
+</div>
+</h6>
+<hr>
+
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Insert moving object into the table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>insert into usertrajs (id, carnumber) values( 1, 'mt0001');
+insert into userstphotos (id, carnumber) values( 1, 'st0001');
+insert into usersensors (id, carnumber) values( 1, 'md0001');
+insert into uservideos (id, name) values( 1, 'mv0001');
+
+</pre>
+</div>
+
+</h6>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Append current moving objects data into car 1’s trajectory, stphoto, video and sensor in the table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+--------'MPOINT ((point) t, (point) t...)'
+UPDATE userTrajs
+SET mt = M_Append (mt, 'MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)')
+WHERE id = 1; 
+
+--------'STPHOTO (uri width height (frame(fov) annotation.json (point) t)'
+UPDATE userStphotos
+SET st = M_Append (st, 'STPHOTO (http://data.u-gis.net/img/003.jpg 100 200 (10 0 60 30 0.001) null (40.65 -73.56) 3000)')
+WHERE id = 1; 
+
+--------'MDOUBLE (double t, double t...)'
+UPDATE userSensors
+SET md_accx = M_Append (md_accx, 'MDOUBLE (1.002 1503828254949, 1.042 1503828254969)')
+WHERE id = 1; 
+
+--------'MVIDEO (uri, mpoint ((point) t, (point) t...), frame ((horizontalAngle verticalAngle distance direction2d direction3d), (horizontalAngle verticalAngle distance direction2d direction3d)...))'
+UPDATE userVideos
+SET mv = M_Append (mv, 'MVIDEO (uri, MPOINT ((0.0 0.0) 1000, (2.0 5.0) 2000, (34.0 333.0) 3000), FRAME ((1 1 1 1 1), (1 1 1 1 2), (1 1 1 1 3)))')
+WHERE id = 1; 
+
+</pre>
+</div>
+<br><br>
+</h6>
+
+
+<h4 class=" text-left mb-sm-2">Temporal queries	</h4>
+<hr>
+
+<h6>
+<p align=center style="color:#000">Table
+1: Temporal Operations in PostGeoMedia</p></h6>
+
+<div align=center style="font-size:12px;">
+
+<table border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr >
+  <td width=70 style='width:52.3pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
+  <p style="color:#000; font-size:12px;">Type </p>
+  </td>
+  <td width=660 style='width:600pt;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
+  <p class=Para style="color:#000;font-size:12px;">Signature </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;height:3.9pt'>
+  <td width=70 rowspan=10 style='width:52.3pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
+  <p class=Para style="color:#000;font-size:12px;">Temporal</p>
+  </td>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
+ <span class=SpellE><span class=SpellE>M_At</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>,
+  n) →<span class=SpellE>mgeo</span><sup>+</sup><o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;height:4.0pt'>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:4.0pt'>
+ <span class=SpellE>M_NumOf</span> (<span
+  class=SpellE>mgeo</span>) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>int
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;height:4.0pt'>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:4.0pt'>
+  <span class=SpellE>M_Time</span> (<span
+  class=SpellE>mgeo</span>) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>[period]
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;height:4.0pt'>
+  <td width=660 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:4.0pt'>
+ <span class=SpellE>M_StartTime</span> (<span
+  class=SpellE>mgeo</span>) <span>→</span>instant
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;height:2.0pt'>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:2.0pt'>
+ <span class=SpellE>M_EndTime</span> (<span
+  class=SpellE>mgeo</span>) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>instant
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6;height:3.9pt'>
+  <td width=660 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
+ <span class=SpellE><span class=SpellE>M_Spatial</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>)
+  →geometry<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7;height:3.9pt'>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
+ <span class=SpellE><span class=SpellE>M_Snapshot</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>,
+  instant) →<span class=SpellE>geometry</span><o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8;height:3.9pt'>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
+ <span class=SpellE><span class=SpellE>M_Slice</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>,
+  period) →<span class=SpellE>mgeo</span><sup>+</sup><o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9;height:3.9pt'>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
+ <span class=SpellE><span class=SpellE>M_Lattice</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>,
+  duration) →<span class=SpellE>mgeo</span><sup>+</sup><o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10;mso-yfti-lastrow:yes;height:6.0pt'>
+  <td width=660 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:6.0pt'>
+ <span class=SpellE><span class=SpellE>M_tOverlaps</span></span><span
+ class=SpellE> (<span class=SpellE>mgeo</span>,
+  period) →</span><span class=SpellE>bool</span><sup><span
+  class=SpellE>+<o:p></o:p></span></sup>
+  (Also, tINTERSECTS, tCONTAINS,
+  tEQUALS, tPRECEDES, tSUCCEEDS, tIMMEDIATELYPRECEDES, and tIMMEDIATELYSUCCEEDS)<span
+  style='font-size:8.0pt;font-family:"Times New Roman"'><o:p></o:p></span>
+  </td>
+ </tr>
+</table>
+</div><br><br>
+</h6>
+
+
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Test I<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_At('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2);
+	------>Return: (,,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
+
+SELECT M_NumOf('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+	------>Return: 2
+
+SELECT M_Time('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+	------>Return:(1504354462000,1504354501000)
+
+SELECT M_StartTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+	------>Return:1504354462000
+
+SELECT M_EndTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+	------>Return:1504354501000
+
+SELECT M_Spatial('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
+
+SELECT M_Snapshot('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1000);
+	------>Return:POINT(40.77 -73.95)
+
+SELECT M_Slice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (1100, 1200)');
+	------>Return:(,,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}")
+
+SELECT M_Lattice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 2000);
+	------>Return:(,,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
+
+SELECT M_tOverlaps('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'Period (1100, 2200)');
+	------>Return: true
+
+</pre>
+</div><br>
+Test II<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_At(mt, 2) FROM usertrajs;
+	------>Return: (1,286114,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
+
+SELECT M_NumOf(mt) FROM usertrajs;
+	------>Return: 2
+
+SELECT M_Time(mt) FROM usertrajs;
+	------>Return:(1504354462000,1504354501000)
+
+SELECT M_StartTime(mt) FROM usertrajs;
+	------>Return:1504354462000
+
+SELECT M_EndTime(mt) FROM usertrajs;
+	------>Return:1504354501000
+
+SELECT M_Spatial(mt) FROM usertrajs;
+	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
+
+SELECT M_Snapshot(mt, 1000) FROM usertrajs;
+	------>Return:POINT(40.77 -73.95)
+
+SELECT M_Slice(mt, 'Period (1100, 1200)') FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}")
+
+SELECT M_Lattice(mt, 2000) FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
+
+SELECT M_tOverlaps(mt, 'Period (1100, 2200)') FROM usertrajs;
+	------>Return: true
+
+</pre>
+</div>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Query examples <br><br>
+Retrieve videos in userVideos table which are taken during 'period (1100, 1200)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT id, mv
+FROM userVideos
+WHERE M_Overlaps(mv, 'Period (1100, 1150)'); </pre>
+</div>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve videos in userVideos table which are taken during 'period (1100, 1150)', returns the sliced video files by 'period (1100, 1200)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT id, M_Slice( mv, 'Period (1100, 1200)')
+FROM userVideos
+WHERE M_Overlaps(mv, 'Period (1100, 1150)');</pre>
+</div>
+<br><br>
+
+
+
+
+
+
+
+
+<h4 class=" text-left mb-sm-2">Spatial and spatiotemporal queries	</h4>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+
+
+<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+text-align:center;line-height:150%'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
+
+<p align=center style="color:#000">Table
+2: Spatial and Spatiotemporal Operations in PostGeoMedia</p>
+
+<div align=center style="font-size:12px;">
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:12.7pt'>
+  <td width=78 style='width:58.25pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
+  <p class=Para style="color:#000;font-size:12px;">Type </p>
+  </td>
+  <td width=242 style='width:600pt;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
+  <p class=Para style="color:#000;font-size:12px;">Signature </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=78 rowspan=33 style='width:58.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Para style="color:#000;font-size:12px;">Spatial</p>
+  <p class=Para style="color:#000;font-size:12px;">and </p>
+  <p class=Para style="color:#000;font-size:12px;"><span class=SpellE>Spatio</span>-</p>
+  <p class=Para style="color:#000;font-size:12px;">temporal</p>
+  </td>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE><span class=SpellE>M_TimeAtCummulative</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>,
+  double) →long<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE><span class=SpellE>M_Slice</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>,
+  <span class=SpellE>geo</span>) →<span class=SpellE>mgeo</span><sup>
+  +</sup>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_SnapToGrid</span> (<span
+  class=SpellE>mgeo</span>, int) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span><span class=SpellE>mgeo</span><sup>
+  +</sup>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_Intersects</span>
+  (<span class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span><span
+  class=SpellE>mbool   M_mIntersects (mgeo, geo) →bool</span>
+  </td>
+ </tr>
+ 
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_mEnters</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>bool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_mBypasses</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>bool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_mStayIn</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>bool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+<span class=SpellE>M_mLeaves</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>bool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_mCrosses</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>bool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_EvenTime</span> (<span
+  class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>[<span
+  class=SpellE>minstant</span>]
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_Relationship</span>
+  (<span class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span><span
+  class=SpellE>mstring </span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_Inside</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_Equal</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_Overlaps</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+<span class=SpellE>M_Disjoint</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_Meet</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE><span class=SpellE>M_Distance</span></span><span
+  class=SpellE> (<span class=SpellE>mgeo</span>,
+  <span class=SpellE>mgeo</span>) →<span class=SpellE>mdouble   M_Distance (mgeo, geo) →mdouble</span><o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:11'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_Area</span> (<span
+  class=SpellE>mgeo</span>) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span><span class=SpellE>mdouble</span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:12'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_Direction</span> (<span
+  class=SpellE>mgeo</span>) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span><span class=SpellE>mdouble</span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:13'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_VeolocityAtTime</span>
+  (<span class=SpellE>mgeo</span>, instant) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span> double
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:14;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+  <span class=SpellE>M_AccelerationAtTime</span>
+  (<span class=SpellE>mgeo</span>, instant) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span> double
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:15;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+  <span class=SpellE>M_<span class=GramE>Max</span></span><span
+  class=GramE>(</span><span class=SpellE>mdouble</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  <span class=SpellE>double</span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:16;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+  <span class=SpellE>M_<span class=GramE>Min</span></span><span
+  class=GramE>(</span><span class=SpellE>mdouble</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  <span class=SpellE>double</span> 
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:17;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+ <span class=SpellE>M_<span class=GramE>Avg</span></span><span
+  class=GramE>(</span><span class=SpellE>mdouble</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  double
+  <span class=SpellE>M_<span class=GramE>Avg</span></span><span
+  class=GramE>(</span><span class=SpellE>mdouble</span>,duration) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  double
+  </td>
+ </tr>
+  <tr style='mso-yfti-irow:15;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+  <span class=SpellE>M_<span class=GramE>Max</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  <span class=SpellE>int</span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:16;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+  <span class=SpellE>M_<span class=GramE>Min</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  <span class=SpellE>int</span> 
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:17;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+ <span class=SpellE>M_<span class=GramE>Avg</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  double
+  <span class=SpellE>M_<span class=GramE>Avg</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>,duration) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  double
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:18;mso-yfti-lastrow:yes;height:4.9pt'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:4.9pt'>
+  <span class=SpellE>M_<span class=GramE>DWithin</span></span><span
+  class=GramE>( <span class=SpellE>mgeo</span></span>, <span class=SpellE>mgeo</span>,
+  double ) <span style='font-family:"Calibri",sans-serif;mso-ascii-font-family:
+  "Linux Libertine";mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:
+  "Times New Roman"'>→</span>bool
+  </td>
+ </tr>
+</table>
+
+</div><br><br>
+
+Test I<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_TimeAtCummulative('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2);
+	------>Return: 1504354471666
+
+SELECT M_Slice('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:(,,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_SnapToGrid('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1);
+	------>Return:(,,"{""(40.8,-74.0)"",""(40.8,-74.0)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Intersects('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000,
+		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
+	------>Return:(,,"{t,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_mEnters('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+
+SELECT M_mBypasses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+
+SELECT M_mStayIn('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:true
+
+SELECT M_mLeaves('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+
+SELECT M_mCrosses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+	
+SELECT M_Direction('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
+	------>Return: (,,"{0,-0.08}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_VelocityAtTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1500);
+	------>Return: 1.37
+	
+SELECT M_AccelerationAtTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 1500);
+	------>Return: 0.0006
+	
+SELECT M_Max('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
+	------>Return: 1.042
+	
+SELECT M_Min('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
+	------>Return: 1.002
+	
+SELECT M_Avg('MDOUBLE (1.002 1503828254949, 1.042 1503828254969)');
+	------>Return: 1.022
+	
+SELECT M_DWithin('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
+		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)', 500);
+	------>Return: true
+	
+</pre>
+</div><br>
+Test II<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_TimeAtCummulative(mt, 2) FROM usertrajs;
+	------>Return: 1504354471666
+
+SELECT M_Slice(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_SnapToGrid(mt, 1) FROM usertrajs;
+	------>Return:(1,286114,"{""(40.8,-74.0)"",""(40.8,-74.0)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_mEnters(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_mBypasses(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_mStayIn(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:true
+
+SELECT M_mLeaves(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_mCrosses(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_Inside('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Equal('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Overlaps('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Disjoint('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Meet('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{t,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Distance('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{0,0}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Area(mv) FROM uservideos;
+	------>Return: (1,286114,"{57.7,57.7}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Direction(mt) FROM usertrajs;
+	------>Return: (1,286114,"{0,-0.08}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_VelocityAtTime(mt, 2000) FROM usertrajs;
+	------>Return: 1.37
+	
+SELECT M_AccelerationAtTime(mt, 2000) FROM usertrajs;
+	------>Return: 0.0006
+	
+SELECT M_Avg(md_accx) FROM userSensors;
+	------>Return: 0.9
+	
+</pre>
+</div>
+Query Examples<br><br>
+Retrieve videos in userVideos table which have entered the city 'New York'. <br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT id, name, mv
+FROM userVideos a, city c
+WHERE M_Enters(a.mv, c.geo ) = true AND c.name='New York';</pre>
+</div>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve the cars in userTrajs table that have left from city ‘New York’ during 'period (1100, 1200)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT id, carnumber
+FROM userTrajs a, city c
+WHERE  M_Leaves(M_Slice(a.mt,'Period (1100, 1200)'), c.geo) = true AND c.name = 'New York';
+</pre>
+</div>
+<hr>
+<h6 style=" font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve the cars in userTrajs table that traveled up to 500m from central New York city.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 65px;">SELECT id, carnumber
+FROM userTrajs a 
+WHERE  M_Max( 
+M_Distance( a.mt, 'POLYGON ((40.74 -73.99, 40.74 -73.98, 40.73 -73.98, 40.73 -73.99, 40.74 -73.99 ))')) < 500.0;</pre>
+</div>
+
+<br><br>
+<h4 class=" text-left mb-sm-2">Similarity queries	</h4>
+<hr>
+
+<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+text-align:center;line-height:normal'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
+
+<p align=center style="color:#000">Table 3: Trajectory Similarity
+Operations </p>
+<div align=center style="font-size:12px;">
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+  <td width=72 style='width:53.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
+  <p class=Para style="color:#000;font-size:12px;">Type </p>
+  </td>
+  <td width=241 style='width:600pt;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
+  <p class=Para style="color:#000;font-size:12px;">Signature </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=72 rowspan=4 style='width:53.75pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Para style="color:#000;font-size:12px;">Similarity</p>
+  </td>
+  <td width=241 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span sclass=SpellE><span
+  style='mso-spacerun:yes'></span><span class=SpellE>M_Hausdorff</span> (<span
+  class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) </span><span
+  style='font-size:8.0pt;mso-ascii-font-family:"Linux Libertine";mso-fareast-font-family:
+  Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman";mso-fareast-language:EN-US;mso-bidi-font-weight:
+  bold'>→</span><span class=SpellE>double<o:p></o:p></span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=241 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  M_LCSS (<span
+  class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>double
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=241 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_Traclus</span>
+  (<span class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>double
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes'>
+  <td width=241 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  M_LCVS (<span
+  class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>double
+  </td>
+ </tr>
+</table></div>
+<br>
+
+
+
+<h6 style=" font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Test I<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_Hausdorff('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return: 0
+
+SELECT M_LCSS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return: 1
+
+SELECT M_Traclus('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return: 0
+
+SELECT M_LCVS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return: 1
+
+</pre>
+</div><br>
+Test II<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_Hausdorff('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) FROM userVideos;
+	------>Return: 0
+
+SELECT M_LCSS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) FROM userVideos;
+	------>Return: 1
+
+SELECT M_Traclus('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) FROM userVideos;
+	------>Return: 0.00145
+
+SELECT M_LCVS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) userVideos;
+	------>Return: 1
+
+</pre>
+</div>
+Query Examples<br><br>
+Return LCVS similarity distances between two videos in userVideos table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>SELECT a.id, b.id, M_LCVS (a.mv, b.mv, 40) 
+FROM userVideos a, userVideos b;
+
+</pre>
+</div>
+<br><br>
+
+
+
+
+
+
+<h4 class=" text-left mb-sm-2">FOV queries	</h4>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Test I<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+
+And also support Table 1,2,3 functions.
+
+</pre>
+</div><br>
+Test II<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+
+</pre>
+</div>
+
+Query Examples<br><br>
+Retrieve FOVs from userVideos table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 32px;">
+SELECT id, M_FOV(mv) 
+FROM userVideos;
+</pre>
+</div>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve FOVs in userVideos table that the shortest distance is less than 10m.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT a.id, b.id, M_FOV(a.mv), M_FOV(b.mv)
+FROM userVideos a, userVideos b 
+WHERE M_DWithin(a.mv, a.mv, 10);
+</pre>
+</div>
+<br><br>
+
+
+
+
+<h4 class=" text-left mb-sm-2">Join queries	</h4>
+<hr>
+<h6 style="font-size:13px;">
+
+Test I<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_Intersects(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return:(1,286114,"{t,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_EvenTime(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Relationship(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{meet"",inside""}") 
+
+SELECT M_Inside(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Equal(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Overlaps(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Disjoint(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Meet(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{t,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Distance(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{0,0}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_DWithin(a.mt, b.mv, 500) FROM usertrajs a, userVideos b;
+	------>Return: true
+	
+SELECT M_Hausdorff(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: 0
+
+SELECT M_LCSS(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: 1
+
+SELECT M_Traclus(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: 0.00145
+
+SELECT M_LCVS(a.mv, b.mv) FROM userVideos a, userVideos b;
+	------>Return: 1
+
+</pre>
+</div>
+
+Query Examples<br><br>
+Find the videos which could be taken car 'TRUMP001'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT a.id, b.id, a.mv
+FROM userVideos a, userTrajs b
+WHERE M_ANY(M_Intersects( a.mv, b.mt ) ) = true AND a.name ='TRUMP001';
+</pre>
+</div>
+<hr>
+<h6 style="font-size:13px;">
+Find the videos in userVideos table which have the same movement trajectory during 'period (1100, 1150)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT a.id, b.id
+FROM userVideos a, userVideos b 
+WHERE M_LCSS( M_Slice(a.mv, 'Period (1100, 1150)'), M_Slice(b.mv, 'Period (1100, 1150)'), 0.01, 40) = 1;
+</pre>
+</div>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Other queries.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT m_numof(a.mv)
+FROM uservideos a
+WHERE (m_spatial(a.mv) && ST_MakeEnvelope ( -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mv, 'Period (1503828255000, 1503828259000)'));
+	
+SELECT m_min(m_distance(a.mv, b.mv))
+FROM uservideos a, uservideos b
+WHERE ( m_spatial(a.mv) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mv , ‘Period (1503828255000, 1503828259000)’))
+      AND ( m_spatial(b.mv) && ST_MakeEnvelope (  -73.857803, 40.659805,  -73.798346, 40.692615,  4326) AND
+	m_tIntersects(b.mv , 'Period (1503828255000, 1503828259000)'));
+	
+SELECT m_slice(a.mt, 'Period (1503828255000, 1503828259000)') 
+FROM usertrajs a
+WHERE ( m_spatial(a.mt) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND
+	m_tIntersects(a.mt , 'Period (1503828255000, 1503828259000)'));
+
+SELECT m_slice(a.mt, 'Period (1503828255000, 1503828259000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))')
+FROM usertrajs a
+WHERE ( m_spatial(a.mt) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mt , 'Period (1503828255000, 1503828259000)'));
+	
+
+SELECT m_leaves(a.mt,  b.mv)
+FROM usertrajs a, uservideos b 
+WHERE m_tIntersects(a.mt , 'Period (1503828255000, 1503828259000)'));
+
+SELECT M_Hausdorff(a.mv, b.mv)
+FROM uservideos a, uservideos b
+WHERE ( m_spatial(a.mv) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mv , ‘Period (1503828255000, 1503828259000)’))
+      AND  ( m_spatial(b.mv) && ST_MakeEnvelope (  -73.857803, 40.659805,  -73.798346, 40.692615,  4326) AND
+	m_tIntersects(b.mv , 'Period (1503828255000, 1503828259000)'));
+
+
+</pre>
+</div>
+<br><br>
+		</div>
+</section>
+<!-- //Latest News -->
+
+<!-- copyright -->
+<div class="copyright">
+	<div class="container py-4">
+		<div class=" text-center">
+			<p>© 2019 PostGeoMedia. All Rights Reserved | Design by <a href="http://mcalab.kunsan.ac.kr/"> InfoLab</a> </p>
+		</div>
+	</div>
+</div>
+<!-- //copyright -->
+		
+<!-- move top -->
+<div class="move-top text-right">
+	<a href="#home" class="move-top"> 
+		<span class="fa fa-angle-up  mb-3" aria-hidden="true"></span>
+	</a>
+</div>
+<!-- move top -->
+
+</body>
+</html>
